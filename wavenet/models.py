@@ -44,7 +44,7 @@ class Model(object):
                          bias=True)
 
         costs = tf.nn.sparse_softmax_cross_entropy_with_logits(
-            outputs, targets)
+            logits=outputs, labels=targets)
         cost = tf.reduce_mean(costs)
 
         train_step = tf.train.AdamOptimizer(learning_rate=0.001).minimize(cost)
@@ -80,9 +80,9 @@ class Model(object):
             if cost < 1e-1:
                 terminal = True
             losses.append(cost)
-            if i % 50 == 0:
-                plt.plot(losses)
-                plt.show()
+            #if i % 50 == 0:
+            #    plt.plot(losses)
+            #    plt.show()
 
 
 class Generator(object):
@@ -145,13 +145,13 @@ class Generator(object):
             input = np.array(self.bins[value])[None, None]
             predictions.append(input)
 
-            if step % 1000 == 0:
-                predictions_ = np.concatenate(predictions, axis=1)
-                plt.plot(predictions_[0, :], label='pred')
-                plt.legend()
-                plt.xlabel('samples from start')
-                plt.ylabel('signal')
-                plt.show()
+            #if step % 1000 == 0:
+            #    predictions_ = np.concatenate(predictions, axis=1)
+            #    plt.plot(predictions_[0, :], label='pred')
+            #    plt.legend()
+            #    plt.xlabel('samples from start')
+            #    plt.ylabel('signal')
+            #    plt.show()
 
         predictions_ = np.concatenate(predictions, axis=1)
         return predictions_
